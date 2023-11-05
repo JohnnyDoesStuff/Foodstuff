@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FoodListPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -161,6 +161,26 @@ class FoodCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Text(currentFood, style: style),
+      ),
+    );
+  }
+}
+
+class FoodListPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var allFood = getFood();
+    allFood.sort();
+
+    final List<FoodCard> foodCards;
+    var result = allFood.map(
+      (food) => FoodCard(currentFood: food)
+    );
+    foodCards = result.toList();
+
+    return Center(
+      child: Column(
+        children: foodCards,
       ),
     );
   }
