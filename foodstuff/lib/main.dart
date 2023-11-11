@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodstuff/food_database.dart';
 import 'package:provider/provider.dart';
 import "dart:math";
 
@@ -31,19 +32,12 @@ T getRandomElement<T>(List<T> list) {
   return list[i];
 }
 
-List<String> getFood() {
-  return [
-    'Steak',
-    'Potato',
-    'Apple'
-  ];
-}
-
 class MyAppState extends ChangeNotifier {
-  var current = getRandomElement(getFood());
+  var database = FoodDatabase();
+  var current = 'No food selected';
 
   void getNextFood() {
-    current = getRandomElement(getFood());
+    current = getRandomElement(database.getFood());
     notifyListeners();
   }
 }
@@ -59,12 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
     Widget page;
     switch (selectedIndex) {
       case 0:
         page = GeneratorPage();
       case 1:
-        page = FoodListPage();
+        page = FoodListPage(appState.database);
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -165,9 +160,13 @@ class FoodCard extends StatelessWidget {
 }
 
 class FoodListPage extends StatelessWidget {
+
+  final FoodDatabase database;
+  FoodListPage(this.database);
+
   @override
   Widget build(BuildContext context) {
-    var allFood = getFood();
+    var allFood = database.getFood();
     allFood.sort();
 
     final List<FoodCard> foodCards;
