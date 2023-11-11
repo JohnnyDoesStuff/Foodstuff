@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodstuff/food_add_page.dart';
 import 'package:foodstuff/food_database.dart';
 import 'package:provider/provider.dart';
 import "dart:math";
@@ -60,6 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
       case 1:
         page = FoodListPage(appState.database);
+      case 2:
+        page = FoodAddPage(appState.database);
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -80,6 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     NavigationRailDestination(
                       icon: Icon(Icons.favorite),
                       label: Text('All food'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.add),
+                      label: Text('Add food'),
                     ),
                   ],
                   selectedIndex: selectedIndex,

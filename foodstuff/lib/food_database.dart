@@ -1,5 +1,12 @@
 class FoodDatabase {
+
+  final List<String> foodList = ['Steak', 'Potato', 'Apple', 'Banana'];
+
   List<String> getFood() {
-    return ['Steak', 'Potato', 'Apple', 'Banana'];
+    return foodList;
+  }
+
+  void addFood(String newFood) {
+    foodList.add(newFood);
   }
 }
