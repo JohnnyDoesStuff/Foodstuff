@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_add_page.dart';
-import 'package:foodstuff/food_database.dart';
+import 'package:foodstuff/food_list_page.dart';
+import 'package:foodstuff/generator_page.dart';
+import 'package:foodstuff/my_app_state.dart';
 import 'package:provider/provider.dart';
-import "dart:math";
 
 void main() {
   runApp(const MyApp());
@@ -24,22 +25,6 @@ class MyApp extends StatelessWidget {
           ),
           home: MyHomePage(),
         ));
-  }
-}
-
-T getRandomElement<T>(List<T> list) {
-  final random = Random();
-  var i = random.nextInt(list.length);
-  return list[i];
-}
-
-class MyAppState extends ChangeNotifier {
-  var database = FoodDatabase();
-  var current = 'No food selected';
-
-  void getNextFood() {
-    current = getRandomElement(database.getFood());
-    notifyListeners();
   }
 }
 
@@ -107,87 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       }
-    );
-  }
-}
-
-class GeneratorPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var currentFood = appState.current;
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FoodCard(currentFood: currentFood),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNextFood();
-                },
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FoodCard extends StatelessWidget {
-  const FoodCard({
-    super.key,
-    required this.currentFood,
-  });
-
-  final String currentFood;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      shadowColor: theme.colorScheme.secondary,
-      elevation: 10,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(currentFood, style: style),
-      ),
-    );
-  }
-}
-
-class FoodListPage extends StatelessWidget {
-
-  final FoodDatabase database;
-  FoodListPage(this.database);
-
-  @override
-  Widget build(BuildContext context) {
-    var allFood = database.getFood();
-    allFood.sort();
-
-    final List<FoodCard> foodCards;
-    var result = allFood.map(
-      (food) => FoodCard(currentFood: food)
-    );
-    foodCards = result.toList();
-
-    return Center(
-      child: SingleChildScrollView (
-        child: Column(
-          children: foodCards,
-        ),
-      ),
     );
   }
 }
