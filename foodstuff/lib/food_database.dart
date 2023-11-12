@@ -7,6 +7,11 @@ class FoodDatabase {
   }
 
   void addFood(String newFood) {
+
+    // todo: make it case insensitive
+    if (foodList.contains(newFood)) {
+      return;
+    }
     foodList.add(newFood);
   }
 }
