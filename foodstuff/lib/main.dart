@@ -183,8 +183,10 @@ class FoodListPage extends StatelessWidget {
     foodCards = result.toList();
 
     return Center(
-      child: Column(
-        children: foodCards,
+      child: SingleChildScrollView (
+        child: Column(
+          children: foodCards,
+        ),
       ),
     );
   }
