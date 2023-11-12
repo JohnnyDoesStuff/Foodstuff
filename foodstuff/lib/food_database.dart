@@ -14,4 +14,10 @@ class FoodDatabase {
     }
     foodList.add(newFood);
   }
+
+  void removeFood(String foodToRemove) {
+    if (foodList.contains(foodToRemove)) {
+      foodList.remove(foodToRemove);
+    }
+  }
 }

@@ -8,7 +8,12 @@ class MyAppState extends ChangeNotifier {
   var current = 'No food selected';
 
   void getNextFood() {
-    current = getRandomElement(database.getFood());
+    var allFood = database.getFood();
+    if (allFood.isEmpty) {
+      current = 'No food is stored';
+    } else {
+      current = getRandomElement(allFood);
+    }
     notifyListeners();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodstuff/food_card.dart';
+import 'package:foodstuff/food_card_edit.dart';
 import 'package:foodstuff/food_database.dart';
 
 class FoodListPage extends StatelessWidget {
@@ -12,9 +12,9 @@ class FoodListPage extends StatelessWidget {
     var allFood = database.getFood();
     allFood.sort();
 
-    final List<FoodCard> foodCards;
+    final List<FoodCardEdit> foodCards;
     var result = allFood.map(
-      (food) => FoodCard(currentFood: food)
+      (food) => FoodCardEdit(food: food, database: database,)
     );
     foodCards = result.toList();
 
