@@ -66,11 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       label: Text('Home'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.favorite),
+                      icon: Icon(Icons.food_bank_sharp),
                       label: Text('All food'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.add),
+                      icon: Icon(Icons.add_shopping_cart),
                       label: Text('Add food'),
                     ),
                   ],
