@@ -9,27 +9,35 @@ class FoodAddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              border: UnderlineInputBorder(),
-              hintText: 'Enter a food name',
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                hintText: 'Enter a food name',
+              ),
+              controller: textController,
             ),
-            controller: textController,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    database.addFood(textController.text);
-                  },
-                  child: Text('Add food'))
-            ],
-          )
-        ],
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      database.addFood(textController.text);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.add),
+                        Text('Add food'),
+                      ],
+                    ))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -21,7 +21,10 @@ class FoodCard extends StatelessWidget {
       elevation: 10,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(currentFood, style: style),
+        child: SingleChildScrollView (
+          scrollDirection: Axis.horizontal,
+          child: Text(currentFood, style: style)
+        ),
       ),
     );
   }

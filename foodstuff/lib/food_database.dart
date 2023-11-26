@@ -8,6 +8,9 @@ class FoodDatabase {
 
   void addFood(String newFood) {
 
+    if(newFood.isEmpty) {
+      return;
+    }
     // todo: make it case insensitive
     if (foodList.contains(newFood)) {
       return;
