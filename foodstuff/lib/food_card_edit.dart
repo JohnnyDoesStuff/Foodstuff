@@ -15,16 +15,19 @@ class FoodCardEdit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        FoodCard(currentFood: food),
-        ElevatedButton(
-          onPressed: () {
-            database.removeFood(food);
-          },
-          child: Icon(Icons.delete),
-        )
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          FoodCard(currentFood: food),
+          ElevatedButton(
+            onPressed: () {
+              database.removeFood(food);
+            },
+            child: Icon(Icons.delete),
+          )
+        ],
+      ),
     );
   }
 }
