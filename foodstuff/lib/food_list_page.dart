@@ -11,10 +11,15 @@ class FoodListPage extends StatelessWidget {
     var allFood = database.getFood();
     allFood.sort();
 
-    final List<FoodCardEdit> foodCards;
+    List<FoodCardEdit> foodCards = List.empty();
+
+    removeFood(String foodToRemove) {
+      database.removeFood(foodToRemove);
+    }
+
     var result = allFood.map((food) => FoodCardEdit(
           food: food,
-          database: database,
+          removeFood: removeFood,
         ));
     foodCards = result.toList();
 

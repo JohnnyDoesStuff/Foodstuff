@@ -1,28 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_card.dart';
-import 'package:foodstuff/food_database.dart';
 
-class FoodCardEdit extends StatelessWidget {
+class FoodCardEdit extends StatefulWidget {
 
   const FoodCardEdit({
     super.key,
     required this.food,
-    required this.database,
+    required this.removeFood,
   });
 
   final String food;
-  final FoodDatabase database;
+  final void Function(String) removeFood;
+
+  @override
+  State<StatefulWidget> createState() => _FoodCardEditState();
+
+}
+
+class _FoodCardEditState extends State<FoodCardEdit> {
+
+  late String food;
+  late void Function(String) removeFood;
+  bool isRemoved = false;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    food = widget.food;
+    removeFood = widget.removeFood;
+
+    return isRemoved ? Container()
+      : SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           FoodCard(currentFood: food),
           ElevatedButton(
             onPressed: () {
-              database.removeFood(food);
+              removeFood(food);
+              setState(() {
+                isRemoved = true;
+              });
             },
             child: Icon(Icons.delete),
           )
