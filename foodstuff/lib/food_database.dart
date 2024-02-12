@@ -1,14 +1,19 @@
-class FoodDatabase {
+import 'package:path_provider/path_provider.dart';
 
-  final List<String> foodList = ['Steak', 'Potato', 'Apple', 'Banana'];
+class FoodDatabase {
+  late List<String> foodList;
+
+  FoodDatabase._(String storagePath) {
+    print(storagePath);
+    foodList = ['Steak', 'Potato', 'Apple', 'Banana'];
+  }
 
   List<String> getFood() {
     return foodList;
   }
 
   void addFood(String newFood) {
-
-    if(newFood.isEmpty) {
+    if (newFood.isEmpty) {
       return;
     }
     // todo: make it case insensitive
@@ -22,5 +27,13 @@ class FoodDatabase {
     if (foodList.contains(foodToRemove)) {
       foodList.remove(foodToRemove);
     }
+  }
+
+  static Future<FoodDatabase> create() async {
+    var directory = await getApplicationDocumentsDirectory();
+    String directoryPath = directory.path;
+    String storagePath = '$directoryPath/foodStuff.txt';
+
+    return FoodDatabase._(storagePath);
   }
 }

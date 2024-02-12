@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:foodstuff/food_database.dart';
 
 class MyAppState extends ChangeNotifier {
-  var database = FoodDatabase();
+  late FoodDatabase database;
   var current = 'No food selected';
+
+  MyAppState() {
+    var futureDatabase = FoodDatabase.create();
+    futureDatabase.then((value) => database = value);
+  }
 
   void getNextFood() {
     var allFood = database.getFood();
