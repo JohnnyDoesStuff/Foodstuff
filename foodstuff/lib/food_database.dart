@@ -9,7 +9,7 @@ class FoodDatabase {
     var databaseFile = File(storagePath);
     if (!databaseFile.existsSync()) {
       databaseFile.create();
-      foodList = ['Steak', 'Potato', 'Apple', 'Banana'];
+      foodList = _getDefaultFood();
       _storeFood();
     }
     _loadFood();
@@ -58,6 +58,15 @@ class FoodDatabase {
     var databaseFile = File(storagePath);
     String content = foodList.join("\n");
     databaseFile.writeAsStringSync(content);
+  }
+
+  List<String> _getDefaultFood() {
+    return [
+      'Steak',
+      'Potato',
+      'Apple',
+      'Banana'
+    ];
   }
 
 }
