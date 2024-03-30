@@ -23,6 +23,9 @@ class FoodDatabase {
     if (newFood.isEmpty) {
       return;
     }
+
+    newFood = newFood.trim();
+
     // todo: make it case insensitive
     if (foodList.contains(newFood)) {
       return;
@@ -36,6 +39,37 @@ class FoodDatabase {
       foodList.remove(foodToRemove);
       _storeFood();
     }
+  }
+
+  void exportFood(String exportPath) {
+
+    if (exportPath.isEmpty) {
+      return;
+    }
+
+    if (!exportPath.endsWith('.txt')) {
+      exportPath = '$exportPath.txt';
+    }
+
+    var databaseFile = File(exportPath);
+    String content = foodList.join("\n");
+    databaseFile.writeAsStringSync(content);
+  }
+
+  void importFood(String importPath) {
+    var databaseFile = File(importPath);
+    String content = databaseFile.readAsStringSync();
+    var newFood = content.split("\n");
+    for (var food in newFood) {
+      if (food.isEmpty) {
+        continue;
+      }
+      if (foodList.contains(food)) {
+        continue;
+      }
+      foodList.add(food);
+    }
+    _storeFood();
   }
 
   static Future<FoodDatabase> create() async {
@@ -55,9 +89,7 @@ class FoodDatabase {
   }
 
   void _storeFood() {
-    var databaseFile = File(storagePath);
-    String content = foodList.join("\n");
-    databaseFile.writeAsStringSync(content);
+    exportFood(storagePath);
   }
 
   List<String> _getDefaultFood() {

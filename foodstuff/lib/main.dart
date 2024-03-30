@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:foodstuff/food_add_page.dart';
 import 'package:foodstuff/food_list_page.dart';
 import 'package:foodstuff/generator_page.dart';
+import 'package:foodstuff/load_page.dart';
 import 'package:foodstuff/my_app_state.dart';
+import 'package:foodstuff/save_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -48,6 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FoodListPage(appState.database);
       case 2:
         page = FoodAddPage(appState.database);
+      case 3:
+        page = SavePage(appState.database);
+      case 4:
+        page = LoadPage(appState.database);
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -72,6 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     NavigationRailDestination(
                       icon: Icon(Icons.add_shopping_cart),
                       label: Text('Add food'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.save_alt),
+                      label: Text('Export food data'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.file_upload),
+                      label: Text('Import food data'),
                     ),
                   ],
                   selectedIndex: selectedIndex,
