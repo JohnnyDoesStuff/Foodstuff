@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -11,13 +13,23 @@ class MockPathProviderPlatform extends Mock
         Future<String> getApplicationDocumentsPath() async {
           final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
           var directoryPath = basedir.toFilePath();
-          return "${directoryPath}test_data";
+          return "$directoryPath../../workspace/test_data";
       }
     }
 
+final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
+var directoryPath = basedir.toFilePath();
+var workspacePath = "$directoryPath../../workspace/test_data";
+var newFilePath = "$workspacePath/foodStuff.txt";
+
 void main() {
 
-  setUp(() async {
+  setUpAll(() async {
+      var workspace = Directory(workspacePath);
+      workspace.create(recursive: true);
+
+      var originalFile = File("${directoryPath}test_data/foodStuff.txt");
+      originalFile.copy(newFilePath);
       PathProviderPlatform.instance = MockPathProviderPlatform();
     });
 
@@ -31,6 +43,43 @@ void main() {
 
     futureDatabase.then((database) {
       expect(database.getFood().length, 3);
+      var food = database.getFood();
+      expect(food, ['foo0', 'foo1', 'foo2']);
     });
   });
+
+  test('Food list cannot be modified from outside', () {
+    var futureDatabase = FoodDatabase.create();
+    futureDatabase.then((database) {
+      var food = database.getFood();
+      expect(food, ['foo0', 'foo1', 'foo2']);
+      food.add('foo3');
+      var newFood = database.getFood();
+      expect(newFood, ['foo0', 'foo1', 'foo2']);
+    });
+  });
+
+  test('Can add food to the database', () {
+    var futureDatabase = FoodDatabase.create();
+    futureDatabase.then((database) {
+      database.addFood('foo3');
+      var newFood = database.getFood();
+      expect(newFood, ['foo0', 'foo1', 'foo2', 'foo3']);
+    });
+  });
+
+  test('The added food has been stored persistently', () {
+    var futureDatabase = FoodDatabase.create();
+    futureDatabase.then((database) {
+      database.addFood('foo3');
+      var newFood = database.getFood();
+      expect(newFood, ['foo0', 'foo1', 'foo2', 'foo3']);
+    });
+  });
+
+  tearDownAll(() {
+    var databaseFile = File(newFilePath);
+    databaseFile.deleteSync();
+  });
+
 }

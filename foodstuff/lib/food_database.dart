@@ -16,7 +16,7 @@ class FoodDatabase {
   }
 
   List<String> getFood() {
-    return foodList;
+    return List.from(foodList);
   }
 
   void addFood(String newFood) {
