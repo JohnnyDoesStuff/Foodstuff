@@ -25,4 +25,12 @@ void main() {
     var futureDatabase = FoodDatabase.create();
     expect(futureDatabase, isA<Future<FoodDatabase>>());
   });
+
+  test('Food database contains the expected content', () {
+    var futureDatabase = FoodDatabase.create();
+
+    futureDatabase.then((database) {
+      expect(database.getFood().length, 3);
+    });
+  });
 }

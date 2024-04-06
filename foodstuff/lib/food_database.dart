@@ -84,8 +84,7 @@ class FoodDatabase {
 
   void _loadFood() {
     var databaseFile = File(storagePath);
-    var data = databaseFile.readAsLines();
-    data.then((value) => foodList = value);
+    foodList = databaseFile.readAsLinesSync();
   }
 
   void _storeFood() {
