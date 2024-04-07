@@ -98,6 +98,23 @@ void main() {
       });
     });
 
+    test('Can remove food from the database', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        database.removeFood('foo0');
+        var newFood = database.getFood();
+        expect(newFood, ['foo1', 'foo2', 'foo3']);
+      });
+    });
+
+    test('The removal has been stored persistently', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        var newFood = database.getFood();
+        expect(newFood, ['foo1', 'foo2', 'foo3']);
+      });
+    });
+
     tearDownAll(() {
       var databaseFile = File(newFilePath);
       databaseFile.deleteSync();
@@ -128,6 +145,55 @@ void main() {
         expect(food.length, 6);
         expect(food, ['foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5']);
       });
+    });
+
+    tearDownAll(() {
+      var databaseFile = File(newFilePath);
+      databaseFile.deleteSync();
+    });
+  });
+
+  group('Can export food to a file', () {
+    setUpAll(() async {
+      var originalFile = File("${directoryPath}test_data/foodStuff.txt");
+      originalFile.copy(newFilePath);
+    });
+
+    test('Can export food to a file', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        String exportPath = "${directoryPath}test_data/foodExport.txt";
+        database.exportFood(exportPath);
+
+        var exportedFile = File(exportPath);
+        expect(exportedFile.existsSync(), true);
+        var exportedFood = exportedFile.readAsLinesSync();
+        expect(exportedFood.length, 3);
+        expect(exportedFood[0], 'foo0');
+        expect(exportedFood[1], 'foo1');
+        expect(exportedFood[2], 'foo2');
+      });
+    });
+
+    test('Can export food to a file without specifying file extension', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        String exportPath = "${directoryPath}test_data/foodExport";
+        database.exportFood(exportPath);
+
+        var exportedFile = File("$exportPath.txt");
+        expect(exportedFile.existsSync(), true);
+        var exportedFood = exportedFile.readAsLinesSync();
+        expect(exportedFood.length, 3);
+        expect(exportedFood[0], 'foo0');
+        expect(exportedFood[1], 'foo1');
+        expect(exportedFood[2], 'foo2');
+      });
+    });
+
+    tearDown(() {
+      var exportedFile = File("${directoryPath}test_data/foodExport.txt");
+      exportedFile.deleteSync();
     });
 
     tearDownAll(() {
