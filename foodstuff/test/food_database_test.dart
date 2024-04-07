@@ -9,13 +9,13 @@ import 'package:mockito/mockito.dart';
 class MockPathProviderPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements PathProviderPlatform {
-      @override
-        Future<String> getApplicationDocumentsPath() async {
-          final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
-          var directoryPath = basedir.toFilePath();
-          return "$directoryPath../../workspace/test_data";
-      }
-    }
+  @override
+  Future<String> getApplicationDocumentsPath() async {
+    final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
+    var directoryPath = basedir.toFilePath();
+    return "$directoryPath../../workspace/test_data";
+  }
+}
 
 final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
 var directoryPath = basedir.toFilePath();
@@ -23,7 +23,6 @@ var workspacePath = "$directoryPath../../workspace/test_data";
 var newFilePath = "$workspacePath/foodStuff.txt";
 
 void main() {
-
   setUpAll(() async {
     var workspace = Directory(workspacePath);
     workspace.create(recursive: true);
@@ -31,10 +30,10 @@ void main() {
 
   group("Can work with a basic database", () {
     setUpAll(() async {
-        var originalFile = File("${directoryPath}test_data/foodStuff.txt");
-        originalFile.copy(newFilePath);
-        PathProviderPlatform.instance = MockPathProviderPlatform();
-      });
+      var originalFile = File("${directoryPath}test_data/foodStuff.txt");
+      originalFile.copy(newFilePath);
+      PathProviderPlatform.instance = MockPathProviderPlatform();
+    });
 
     test('Can create a food database', () {
       var futureDatabase = FoodDatabase.create();
@@ -88,10 +87,11 @@ void main() {
 
   group('Can read food from a file that has comments', () {
     setUpAll(() async {
-        var originalFile = File("${directoryPath}test_data/foodStuffComments.txt");
-        originalFile.copy(newFilePath);
-        PathProviderPlatform.instance = MockPathProviderPlatform();
-      });
+      var originalFile =
+          File("${directoryPath}test_data/foodStuffComments.txt");
+      originalFile.copy(newFilePath);
+      PathProviderPlatform.instance = MockPathProviderPlatform();
+    });
 
     test('Can read food from a file that has comments', () {
       var futureDatabase = FoodDatabase.create();
@@ -117,5 +117,4 @@ void main() {
       databaseFile.deleteSync();
     });
   });
-
 }
