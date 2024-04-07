@@ -25,61 +25,97 @@ var newFilePath = "$workspacePath/foodStuff.txt";
 void main() {
 
   setUpAll(() async {
-      var workspace = Directory(workspacePath);
-      workspace.create(recursive: true);
-
-      var originalFile = File("${directoryPath}test_data/foodStuff.txt");
-      originalFile.copy(newFilePath);
-      PathProviderPlatform.instance = MockPathProviderPlatform();
-    });
-
-  test('Can create a food database', () {
-    var futureDatabase = FoodDatabase.create();
-    expect(futureDatabase, isA<Future<FoodDatabase>>());
+    var workspace = Directory(workspacePath);
+    workspace.create(recursive: true);
   });
 
-  test('Food database contains the expected content', () {
-    var futureDatabase = FoodDatabase.create();
+  group("Can work with a basic database", () {
+    setUpAll(() async {
+        var originalFile = File("${directoryPath}test_data/foodStuff.txt");
+        originalFile.copy(newFilePath);
+        PathProviderPlatform.instance = MockPathProviderPlatform();
+      });
 
-    futureDatabase.then((database) {
-      expect(database.getFood().length, 3);
-      var food = database.getFood();
-      expect(food, ['foo0', 'foo1', 'foo2']);
+    test('Can create a food database', () {
+      var futureDatabase = FoodDatabase.create();
+      expect(futureDatabase, isA<Future<FoodDatabase>>());
+    });
+
+    test('Food database contains the expected content', () {
+      var futureDatabase = FoodDatabase.create();
+
+      futureDatabase.then((database) {
+        expect(database.getFood().length, 3);
+        var food = database.getFood();
+        expect(food, ['foo0', 'foo1', 'foo2']);
+      });
+    });
+
+    test('Food list cannot be modified from outside', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        var food = database.getFood();
+        expect(food, ['foo0', 'foo1', 'foo2']);
+        food.add('foo3');
+        var newFood = database.getFood();
+        expect(newFood, ['foo0', 'foo1', 'foo2']);
+      });
+    });
+
+    test('Can add food to the database', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        database.addFood('foo3');
+        var newFood = database.getFood();
+        expect(newFood, ['foo0', 'foo1', 'foo2', 'foo3']);
+      });
+    });
+
+    test('The added food has been stored persistently', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        database.addFood('foo3');
+        var newFood = database.getFood();
+        expect(newFood, ['foo0', 'foo1', 'foo2', 'foo3']);
+      });
+    });
+
+    tearDownAll(() {
+      var databaseFile = File(newFilePath);
+      databaseFile.deleteSync();
     });
   });
 
-  test('Food list cannot be modified from outside', () {
-    var futureDatabase = FoodDatabase.create();
-    futureDatabase.then((database) {
-      var food = database.getFood();
-      expect(food, ['foo0', 'foo1', 'foo2']);
-      food.add('foo3');
-      var newFood = database.getFood();
-      expect(newFood, ['foo0', 'foo1', 'foo2']);
-    });
-  });
+  group('Can read food from a file that has comments', () {
+    setUpAll(() async {
+        var originalFile = File("${directoryPath}test_data/foodStuffComments.txt");
+        originalFile.copy(newFilePath);
+        PathProviderPlatform.instance = MockPathProviderPlatform();
+      });
 
-  test('Can add food to the database', () {
-    var futureDatabase = FoodDatabase.create();
-    futureDatabase.then((database) {
-      database.addFood('foo3');
-      var newFood = database.getFood();
-      expect(newFood, ['foo0', 'foo1', 'foo2', 'foo3']);
+    test('Can read food from a file that has comments', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        var food = database.getFood();
+        expect(food.length, 4);
+        expect(food, ['foo0', 'foo1', 'foo2', 'foo3']);
+      });
     });
-  });
 
-  test('The added food has been stored persistently', () {
-    var futureDatabase = FoodDatabase.create();
-    futureDatabase.then((database) {
-      database.addFood('foo3');
-      var newFood = database.getFood();
-      expect(newFood, ['foo0', 'foo1', 'foo2', 'foo3']);
+    test('Can import food from a file with comments', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        database.importFood("${directoryPath}test_data/foodImportComments.txt");
+        var food = database.getFood();
+        expect(food.length, 6);
+        expect(food, ['foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5']);
+      });
     });
-  });
 
-  tearDownAll(() {
-    var databaseFile = File(newFilePath);
-    databaseFile.deleteSync();
+    tearDownAll(() {
+      var databaseFile = File(newFilePath);
+      databaseFile.deleteSync();
+    });
   });
 
 }

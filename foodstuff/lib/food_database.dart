@@ -6,6 +6,7 @@ class FoodDatabase {
   late String storagePath;
 
   FoodDatabase._(this.storagePath) {
+    foodList = List.empty(growable: true);
     var databaseFile = File(storagePath);
     if (!databaseFile.existsSync()) {
       databaseFile.create();
@@ -20,17 +21,7 @@ class FoodDatabase {
   }
 
   void addFood(String newFood) {
-    if (newFood.isEmpty) {
-      return;
-    }
-
-    newFood = newFood.trim();
-
-    // todo: make it case insensitive
-    if (foodList.contains(newFood)) {
-      return;
-    }
-    foodList.add(newFood);
+    _tryAddFoodToMemory(newFood);
     _storeFood();
   }
 
@@ -59,15 +50,9 @@ class FoodDatabase {
   void importFood(String importPath) {
     var databaseFile = File(importPath);
     String content = databaseFile.readAsStringSync();
-    var newFood = content.split("\n");
-    for (var food in newFood) {
-      if (food.isEmpty) {
-        continue;
-      }
-      if (foodList.contains(food)) {
-        continue;
-      }
-      foodList.add(food);
+    var allFoodToAdd = content.split("\n");
+    for (var newFood in allFoodToAdd) {
+      _tryAddFoodToMemory(newFood);
     }
     _storeFood();
   }
@@ -84,7 +69,28 @@ class FoodDatabase {
 
   void _loadFood() {
     var databaseFile = File(storagePath);
-    foodList = databaseFile.readAsLinesSync();
+    var databaseText = databaseFile.readAsLinesSync();
+
+    for (var element in databaseText) {
+      _tryAddFoodToMemory(element);
+    }
+  }
+
+  void _tryAddFoodToMemory(String newFood) {
+    if (newFood.isEmpty) {
+      return;
+    }
+
+    newFood = newFood.trim();
+
+    if (newFood.startsWith('#')) {
+      return;
+    }
+    // todo: make it case insensitive
+    if (foodList.contains(newFood)) {
+      return;
+    }
+    foodList.add(newFood);
   }
 
   void _storeFood() {
