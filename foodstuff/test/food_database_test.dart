@@ -26,13 +26,32 @@ void main() {
   setUpAll(() async {
     var workspace = Directory(workspacePath);
     workspace.create(recursive: true);
+    PathProviderPlatform.instance = MockPathProviderPlatform();
+  });
+
+  group('Can start from scratch', () {
+    test('Can create a food database', () {
+      var futureDatabase = FoodDatabase.create();
+
+      expect(futureDatabase, isA<Future<FoodDatabase>>());
+      futureDatabase.then((database) {
+        var food = database.getFood();
+        expect(food.length, greaterThan(0));
+        var expectedFile = File("${directoryPath}test_data/foodStuff.txt");
+        expect(expectedFile.existsSync(), true);
+      });
+    });
+
+    tearDownAll(() {
+      var databaseFile = File(newFilePath);
+      databaseFile.deleteSync();
+    });
   });
 
   group("Can work with a basic database", () {
     setUpAll(() async {
       var originalFile = File("${directoryPath}test_data/foodStuff.txt");
       originalFile.copy(newFilePath);
-      PathProviderPlatform.instance = MockPathProviderPlatform();
     });
 
     test('Can create a food database', () {
@@ -90,7 +109,6 @@ void main() {
       var originalFile =
           File("${directoryPath}test_data/foodStuffComments.txt");
       originalFile.copy(newFilePath);
-      PathProviderPlatform.instance = MockPathProviderPlatform();
     });
 
     test('Can read food from a file that has comments', () {
