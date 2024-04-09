@@ -25,8 +25,13 @@ To just run tests:
 
 ```sh
 cd ./foodstuff
-flutter test ./path/to/test.dart
-# todo: 'flutter test' should also work but the default test still has to be investigated
+flutter test
+```
+
+To only run a particular test:
+```sh
+cd ./foodstuff
+flutter test ./test/some_test.dart
 ```
 
 To run tests and retrieve code coverage:
@@ -34,6 +39,8 @@ To run tests and retrieve code coverage:
 ```PowerShell
 cd ./foodstuff
 flutter test .\test\food_database_test.dart --coverage
+
+# convert the data to html (command for Windows)
 perl C:\ProgramData\chocolatey\lib\lcov\tools\bin\genhtml coverage/lcov.info -o coverage/html
 ```
 

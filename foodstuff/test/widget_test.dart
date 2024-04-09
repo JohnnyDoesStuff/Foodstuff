@@ -5,26 +5,58 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:foodstuff/main.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:mockito/mockito.dart';
+
+
+class MockPathProviderPlatform extends Mock
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
+  @override
+  Future<String> getApplicationDocumentsPath() async {
+    final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
+    var directoryPath = basedir.toFilePath();
+    return "$directoryPath../../workspace/test_data";
+  }
+}
+
+final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
+var directoryPath = basedir.toFilePath();
+var workspacePath = "$directoryPath../../workspace/test_data";
+var newFilePath = "$workspacePath/foodStuff.txt";
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  setUpAll(() async {
+    var workspace = Directory(workspacePath);
+    workspace.create(recursive: true);
+    PathProviderPlatform.instance = MockPathProviderPlatform();
+      var originalFile = File("${directoryPath}test_data/foodStuff.txt");
+      originalFile.copy(newFilePath);
+  });
+
+  testWidgets('Generate food smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('No food selected'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Tap the next button
+    await tester.tap(find.byType(ElevatedButton));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that new text appears
+    expect(find.text('No food selected'), findsNothing);
+  });
+
+  tearDownAll(() {
+    var databaseFile = File(newFilePath);
+    databaseFile.deleteSync();
   });
 }
