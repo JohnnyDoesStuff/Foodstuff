@@ -115,6 +115,18 @@ void main() {
       });
     });
 
+    test('Checks when adding food are case insensitive', () {
+      var futureDatabase = FoodDatabase.create();
+      futureDatabase.then((database) {
+        database.addFood('foo0');
+        database.addFood('Foo0');
+        var newFood = database.getFood();
+
+        expect(newFood.contains('foo0'), true);
+        expect(newFood.contains('Foo0'), false);
+      });
+    });
+
     tearDownAll(() {
       var databaseFile = File(newFilePath);
       databaseFile.deleteSync();

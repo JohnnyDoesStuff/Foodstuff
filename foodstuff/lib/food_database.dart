@@ -86,8 +86,7 @@ class FoodDatabase {
     if (newFood.startsWith('#')) {
       return;
     }
-    // todo: make it case insensitive
-    if (foodList.contains(newFood)) {
+    if (foodList.any((food) => food.toLowerCase() == newFood.toLowerCase())) {
       return;
     }
     foodList.add(newFood);
