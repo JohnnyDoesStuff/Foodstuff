@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foodstuff/food_database.dart';
 
 class MyAppState extends ChangeNotifier {
+  // todo: make database private since it is a late variable
   late FoodDatabase database;
   var current = 'No food selected';
 
@@ -17,14 +18,14 @@ class MyAppState extends ChangeNotifier {
     if (allFood.isEmpty) {
       current = 'No food is stored';
     } else {
-      current = getRandomElement(allFood);
+      current = _getRandomElement(allFood);
     }
     notifyListeners();
   }
-}
 
-T getRandomElement<T>(List<T> list) {
-  final random = Random();
-  var i = random.nextInt(list.length);
-  return list[i];
+  T _getRandomElement<T>(List<T> list) {
+    final random = Random();
+    var i = random.nextInt(list.length);
+    return list[i];
+  }
 }
