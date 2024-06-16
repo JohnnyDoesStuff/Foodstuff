@@ -41,9 +41,19 @@ void main() {
       originalFile.copy(newFilePath);
   });
 
+  testWidgets('Loading screen', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    expect(find.text('Please wait...'), findsOneWidget);
+  });
+
   testWidgets('Generate food smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
+
+    // wait 3 seconds to give the app time to finish loading
+    await tester.pumpAndSettle(const Duration(seconds: 3));
 
     expect(find.text('No food selected'), findsOneWidget);
 

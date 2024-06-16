@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodstuff/food_add_page.dart';
 import 'package:foodstuff/food_list_page.dart';
 import 'package:foodstuff/generator_page.dart';
+import 'package:foodstuff/initializing_page.dart';
 import 'package:foodstuff/load_page.dart';
 import 'package:foodstuff/my_app_state.dart';
 import 'package:foodstuff/save_page.dart';
@@ -17,16 +18,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _createChangeNotifier(),
+      builder: _loadingScreen,
+    );
+  }
+
+  Widget _loadingScreen(BuildContext context, AsyncSnapshot<Widget> snapshot) {
+    switch (snapshot.connectionState) {
+      case ConnectionState.waiting:
+        return InitializingPage();
+      default:
+        if (snapshot.hasError) {
+          throw "Error: ${snapshot.error}";
+        } else {
+          return snapshot.data!;
+        }
+    }
+  }
+
+  Future<Widget> _createChangeNotifier() async {
+    var appState = await MyAppState.create();
     return ChangeNotifierProvider(
-        create: (context) => MyAppState(),
-        child: MaterialApp(
-          title: 'FoodStuff',
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-          ),
-          home: MyHomePage(),
-        ));
+      create: (context) => appState,
+      child: MaterialApp(
+        title: 'FoodStuff',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        ),
+        home: MyHomePage(),
+      ));
   }
 }
 

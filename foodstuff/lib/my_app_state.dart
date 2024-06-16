@@ -5,13 +5,10 @@ import 'package:foodstuff/food_database.dart';
 
 class MyAppState extends ChangeNotifier {
   // todo: make database private since it is a late variable
-  late FoodDatabase database;
+  FoodDatabase database;
   var current = 'No food selected';
 
-  MyAppState() {
-    var futureDatabase = FoodDatabase.create();
-    futureDatabase.then((value) => database = value);
-  }
+  MyAppState._(this.database);
 
   void getNextFood() {
     var allFood = database.getFood();
@@ -21,6 +18,11 @@ class MyAppState extends ChangeNotifier {
       current = _getRandomElement(allFood);
     }
     notifyListeners();
+  }
+
+  static Future<MyAppState> create() async {
+    var futureDatabase = await FoodDatabase.create();
+    return MyAppState._(futureDatabase);
   }
 
   T _getRandomElement<T>(List<T> list) {
