@@ -55,3 +55,5 @@ flutter pub run build_runner clean
 
 ## Additional information
 Currently a customized Flutter runtime is required to use Realm.io. Therefor it is not being used in a productive environment yet.
+
+Note: There have been some plans to maybe use Realm.io as an object oriented database. Right now only a plain text file is used for persistence
