@@ -34,6 +34,9 @@ dependencies:
   provider: ^6.0.0
   path_provider: ^2.0.0
   flutter_file_dialog: ^3.0.2
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -92,3 +95,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  generate: true

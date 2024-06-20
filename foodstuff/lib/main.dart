@@ -1,3 +1,6 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_add_page.dart';
 import 'package:foodstuff/food_list_page.dart';
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _createChangeNotifier(),
+      future: _createApp(),
       builder: _loadingScreen,
     );
   }
@@ -37,12 +40,17 @@ class MyApp extends StatelessWidget {
     }
   }
 
-  Future<Widget> _createChangeNotifier() async {
+  Future<Widget> _createApp() async {
     var appState = await MyAppState.create();
     return ChangeNotifierProvider(
       create: (context) => appState,
       child: MaterialApp(
         title: 'FoodStuff',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
@@ -80,6 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
         throw UnimplementedError('no widget for $selectedIndex');
     }
 
+    var localization = AppLocalizations.of(context);
+    localization ??= AppLocalizationsEn();
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
@@ -91,23 +102,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   destinations: [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
-                      label: Text('Home'),
+                      label: Text(localization!.home),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.food_bank_sharp),
-                      label: Text('All food'),
+                      label: Text(localization.allFoodPage),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.add_shopping_cart),
-                      label: Text('Add food'),
+                      label: Text(localization.addFood),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.save_alt),
-                      label: Text('Export food data'),
+                      label: Text(localization.exportFoodData),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.file_upload),
-                      label: Text('Import food data'),
+                      label: Text(localization.importFoodData),
                     ),
                   ],
                   selectedIndex: selectedIndex,

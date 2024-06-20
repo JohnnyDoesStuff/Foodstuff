@@ -1,0 +1,23 @@
+{
+    "@@locale": "en",
+    "allFoodPage": "All food",
+    "@allFoodPage": {
+        "description": "Shows all food that is stored in the database"
+    },
+    "home": "Home",
+    "@home": {
+        "description": "The home screen"
+    },
+    "addFood": "Add food",
+    "@addFood": {
+        "description": "The add food screen"
+    },
+    "exportFoodData": "Export food data",
+    "@exportFoodData": {
+        "description": "The page to export food data into a file"
+    },
+    "importFoodData": "Import food data",
+    "@importFoodData": {
+        "description": "The page to import food data from a file"
+    }
+}

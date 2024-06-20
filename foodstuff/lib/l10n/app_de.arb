@@ -1,0 +1,8 @@
+{
+    "@@locale": "de",
+    "allFoodPage": "Essensübersicht",
+    "home": "Startseite",
+    "addFood": "Essen hinzufügen",
+    "exportFoodData": "Essensdaten exportieren",
+    "importFoodData": "Essensdaten importieren"
+}
