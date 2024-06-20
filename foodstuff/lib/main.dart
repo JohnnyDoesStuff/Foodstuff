@@ -1,5 +1,4 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_add_page.dart';
@@ -7,6 +6,7 @@ import 'package:foodstuff/food_list_page.dart';
 import 'package:foodstuff/generator_page.dart';
 import 'package:foodstuff/initializing_page.dart';
 import 'package:foodstuff/load_page.dart';
+import 'package:foodstuff/localization.dart';
 import 'package:foodstuff/my_app_state.dart';
 import 'package:foodstuff/save_page.dart';
 import 'package:provider/provider.dart';
@@ -88,8 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         throw UnimplementedError('no widget for $selectedIndex');
     }
 
-    var localization = AppLocalizations.of(context);
-    localization ??= AppLocalizationsEn();
+    var localization = Localization.getLocalization(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -102,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   destinations: [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
-                      label: Text(localization!.home),
+                      label: Text(localization.home),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.food_bank_sharp),
