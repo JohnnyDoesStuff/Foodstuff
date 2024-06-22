@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_database.dart';
+import 'package:foodstuff/localization.dart';
 
 class FoodAddPage extends StatelessWidget {
   final FoodDatabase database;
@@ -8,6 +9,7 @@ class FoodAddPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var localization = Localization.getLocalization(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -17,7 +19,7 @@ class FoodAddPage extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'Enter a food name',
+                hintText: localization.addFoodName,
               ),
               controller: textController,
             ),
@@ -31,7 +33,7 @@ class FoodAddPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(Icons.add),
-                        Text('Add food'),
+                        Text(localization.addFoodButton),
                       ],
                     ))
               ],

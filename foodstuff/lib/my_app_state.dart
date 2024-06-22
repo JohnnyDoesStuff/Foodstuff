@@ -1,19 +1,27 @@
 import 'dart:math';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_database.dart';
+import 'package:foodstuff/localization.dart';
 
 class MyAppState extends ChangeNotifier {
   // todo: make database private since it is a late variable
   FoodDatabase database;
-  var current = 'No food selected';
+  late AppLocalizations localization;
+  late String current;
 
-  MyAppState._(this.database);
+  MyAppState._(this.database) {
+    // todo: if localization is configurable at some point
+    // it has to be checked if this gets updated automatically or not
+    localization = Localization.getCurrentLocalization();
+    current = localization.appStateNoFoodStored;
+  }
 
   void getNextFood() {
     var allFood = database.getFood();
     if (allFood.isEmpty) {
-      current = 'No food is stored';
+      current = localization.appStateNoFoodStored;
     } else {
       current = _getRandomElement(allFood);
     }

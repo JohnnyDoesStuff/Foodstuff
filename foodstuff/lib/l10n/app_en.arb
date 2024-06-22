@@ -12,12 +12,52 @@
     "@addFood": {
         "description": "The add food screen"
     },
+    "addFoodButton": "Add food",
+    "@addFoodButton": {
+        "description": "A button, when being pressed, that adds food to the database"
+    },
+    "addFoodName": "Enter a food name",
+    "@addFoodName" : {
+        "description": "A textbox where food is entered that will be added"
+    },
+    "appStateNoFoodSelected": "No food selected",
+    "@appStateNoFoodSelected" : {
+        "description": "Shows that no food is selected"
+    },
+    "appStateNoFoodStored": "No food stored",
+    "@appStateNoFoodStored" : {
+        "description": "Shows that no food is stored"
+    },
     "exportFoodData": "Export food data",
     "@exportFoodData": {
         "description": "The page to export food data into a file"
     },
+    "exportFoodDataHelp": "Save data to a file in your phone's download directory",
+    "@exportFoodDataHelp" : {
+        "description": "A description that a user can upload data on this page"
+    },
+    "exportFoodDataTextField": "Enter a file name",
+    "@exportFoodDataTextField" : {
+        "description": "A textbox where a user can enter a file name"
+    },
     "importFoodData": "Import food data",
     "@importFoodData": {
         "description": "The page to import food data from a file"
+    },
+    "importFoodDataButton": "Import food data",
+    "@importFoodDataButton" : {
+        "description": "A button, when being pressed, that will import food data from a file"
+    },
+    "importFoodFile" : "Import food from a file",
+    "@importFoodFile" : {
+        "description": "A description that a user can upload data on this page"
+    },
+    "nextButton": "Next",
+    "@nextButton" : {
+        "description": "A button showing that something will proceed"
+    },
+    "waiting": "Please wait...",
+    "@waiting" : {
+        "description": "Text indicating that the user should wait for something to finish"
     }
 }

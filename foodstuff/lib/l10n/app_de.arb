@@ -3,6 +3,16 @@
     "allFoodPage": "Essensübersicht",
     "home": "Startseite",
     "addFood": "Essen hinzufügen",
+    "addFoodButton": "Essen hinzufügen",
+    "addFoodName": "Gib' ein Essen ein",
+    "appStateNoFoodSelected": "Kein Essen ausgewählt",
+    "appStateNoFoodStored": "Kein Essen gespeichert",
     "exportFoodData": "Essensdaten exportieren",
-    "importFoodData": "Essensdaten importieren"
+    "exportFoodDataHelp": "Essensdaten in eine Datei im Download-Verzeichnis exportieren",
+    "exportFoodDataTextField": "Gib' einen Dateinamen ein",
+    "importFoodData": "Essensdaten importieren",
+    "importFoodDataButton": "Essensdaten importieren",
+    "importFoodFile": "Essen aus Datei importieren",
+    "nextButton": "Weiter",
+    "waiting": "Bitte warten..."
 }

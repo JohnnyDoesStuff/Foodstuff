@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_card.dart';
+import 'package:foodstuff/localization.dart';
 import 'package:foodstuff/my_app_state.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,7 @@ class GeneratorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var currentFood = appState.current;
+    var localization = Localization.getLocalization(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -23,7 +25,7 @@ class GeneratorPage extends StatelessWidget {
                   onPressed: () {
                     appState.getNextFood();
                   },
-                  child: Text('Next'),
+                  child: Text(localization.nextButton),
                 ),
               ],
             ),

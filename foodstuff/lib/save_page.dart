@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodstuff/food_database.dart';
+import 'package:foodstuff/localization.dart';
 
 class SavePage extends StatelessWidget {
   final FoodDatabase foodDatabase;
@@ -10,6 +11,7 @@ class SavePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController textController = TextEditingController();
     const String downloadDirectory = "storage/emulated/0/Download/";
+    var localization = Localization.getLocalization(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -17,11 +19,11 @@ class SavePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Save data to a file in your phone\'s download directory'),
+            Text(localization.exportFoodDataHelp),
             TextField(
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'Enter a file name',
+                hintText: localization.exportFoodDataTextField,
               ),
               controller: textController,
             ),
@@ -36,7 +38,7 @@ class SavePage extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.download),
-                      Text('Export food data'),
+                      Text(localization.exportFoodData),
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:foodstuff/food_database.dart';
+import 'package:foodstuff/localization.dart';
 
 class LoadPage extends StatelessWidget {
   final FoodDatabase database;
@@ -13,6 +14,7 @@ class LoadPage extends StatelessWidget {
       dialogType: OpenFileDialogType.document,
       sourceType: SourceType.photoLibrary,
     );
+    var localization = Localization.getLocalization(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -20,7 +22,7 @@ class LoadPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Import food from a file'),
+            Text(localization.importFoodFile),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -33,7 +35,7 @@ class LoadPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.upload),
-                      Text('Import food data'),
+                      Text(localization.importFoodDataButton),
                     ],
                   ),
                 ),
