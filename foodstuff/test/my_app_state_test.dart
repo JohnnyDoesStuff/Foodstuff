@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodstuff/localization.dart';
 import 'package:foodstuff/my_app_state.dart';
 import 'package:mockito/mockito.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
@@ -38,7 +39,8 @@ void main() {
     // act
     myAppState.getNextFood();
     // assert
-    expect(myAppState.current, 'No food is stored');
+    var localization = Localization.getCurrentLocalization();
+    expect(myAppState.current, localization.appStateNoFoodStored);
   });
 
   tearDownAll(() {

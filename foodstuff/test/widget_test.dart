@@ -9,6 +9,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodstuff/localization.dart';
 
 import 'package:foodstuff/main.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
@@ -55,7 +56,8 @@ void main() {
     // wait 3 seconds to give the app time to finish loading
     await tester.pumpAndSettle(const Duration(seconds: 3));
 
-    expect(find.text('No food selected'), findsOneWidget);
+    var localization = Localization.getCurrentLocalization();
+    expect(find.text(localization.appStateNoFoodSelected), findsOneWidget);
 
     // Tap the next button
     await tester.tap(find.byType(ElevatedButton));

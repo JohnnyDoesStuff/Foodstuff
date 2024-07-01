@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
       create: (context) => appState,
       child: MaterialApp(
         title: 'FoodStuff',
-        localizationsDelegates: [
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(
@@ -61,6 +61,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }

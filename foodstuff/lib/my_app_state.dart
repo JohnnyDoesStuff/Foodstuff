@@ -15,7 +15,11 @@ class MyAppState extends ChangeNotifier {
     // todo: if localization is configurable at some point
     // it has to be checked if this gets updated automatically or not
     localization = Localization.getCurrentLocalization();
-    current = localization.appStateNoFoodStored;
+    if (database.getFood().isEmpty) {
+      current = localization.appStateNoFoodStored;
+    } else {
+      current = localization.appStateNoFoodSelected;
+    }
   }
 
   void getNextFood() {
