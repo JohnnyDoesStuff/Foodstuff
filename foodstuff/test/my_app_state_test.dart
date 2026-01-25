@@ -26,10 +26,10 @@ var newFilePath = "$workspacePath/foodStuff.txt";
 void main() {
   setUpAll(() async {
     var workspace = Directory(workspacePath);
-    workspace.create(recursive: true);
+    workspace.createSync(recursive: true);
     PathProviderPlatform.instance = MockPathProviderPlatform();
     var originalFile = File("${directoryPath}test_data/foodStuffEmpty.txt");
-    originalFile.copy(newFilePath);
+    originalFile.copySync(newFilePath);
   });
 
   test('getNextFood smoke test', () async {

@@ -25,7 +25,7 @@ var newFilePath = "$workspacePath/foodStuff.txt";
 void main() {
   setUpAll(() async {
     var workspace = Directory(workspacePath);
-    workspace.create(recursive: true);
+    workspace.createSync(recursive: true);
     PathProviderPlatform.instance = MockPathProviderPlatform();
   });
 

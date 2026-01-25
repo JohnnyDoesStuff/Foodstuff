@@ -24,22 +24,22 @@ class MockPathProviderPlatform extends Mock
   Future<String> getApplicationDocumentsPath() async {
     final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
     var directoryPath = basedir.toFilePath();
-    return "$directoryPath../../workspace/test_data";
+    return "$directoryPath../../workspace/widget_test";
   }
 }
 
 final Uri basedir = (goldenFileComparator as LocalFileComparator).basedir;
 var directoryPath = basedir.toFilePath();
-var workspacePath = "$directoryPath../../workspace/test_data";
+var workspacePath = "$directoryPath../../workspace/widget_test";
 var newFilePath = "$workspacePath/foodStuff.txt";
 
 void main() {
   setUpAll(() async {
     var workspace = Directory(workspacePath);
-    workspace.create(recursive: true);
+    workspace.createSync(recursive: true);
     PathProviderPlatform.instance = MockPathProviderPlatform();
       var originalFile = File("${directoryPath}test_data/foodStuff.txt");
-      originalFile.copy(newFilePath);
+      originalFile.copySync(newFilePath);
   });
 
   testWidgets('Loading screen', (WidgetTester tester) async {
