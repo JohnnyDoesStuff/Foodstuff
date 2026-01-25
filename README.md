@@ -5,6 +5,10 @@ A tool to choose what to eat if you don't know again what to eat/cook today.
 
 ## Getting started
 1. Install Flutter by following the [official documentation](https://flutter.dev/docs/get-started/install)
+1. Build the app
+    ```
+    flutter pub get
+    ```
 
 ## Testing
 
