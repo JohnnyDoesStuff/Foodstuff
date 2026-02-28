@@ -5,10 +5,21 @@ A tool to choose what to eat if you don't know again what to eat/cook today.
 
 ## Getting started
 1. Install Flutter by following the [official documentation](https://flutter.dev/docs/get-started/install)
+1. Install Android SDK via Android Studio: https://developer.android.com/studio
+1. Run `flutter doctor --verbose` to see what else you have to setup. This consists at least of these steps:
+    - Install additional dependencies
+    - Install Android SDK Command-line Tools
+    - Accept licenses
 1. Build the app
     ```
     flutter pub get
     ```
+1. Connect a mobile device to your computer
+1. Start the app
+    ```
+    flutter run
+    ```
+1. You can end the debugging and start using the app -- After actually using the app: Before debugging again, you should backup the data you stored in the app, so that it is not deleted accidently.
 
 ## Testing
 
